@@ -1,0 +1,25 @@
+@font-face {
+  font-family: 'FarmFont';
+  src: url('/FarmFont.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.egg {
+  display: block;
+  width: 126px;
+  height: 180px;
+  background: #FCD6A4; /* You can change the color of the Egg, but that's fine. */
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; /* Don't change the border-radius, or It'll look bad. */
+  box-shadow: inset 0px 2px 7px #ffe7c7, inset 0px -4px 7px #C79F69; /* You can change the color of the Egg (box-shadow), but that's fine. */
+  animation: turn 2s infinite linear ;
+}
+
+@keyframes turn {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,26 @@
+/* Projects.css */
+.carousel-container {
+  perspective: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px; /* Adjust as needed */
+  position: relative;
+}
+
+#carousel {
+  width: 300px;
+  height: 250px;
+  right: 0px;
+  transform-style: preserve-3d;
+  transform-origin: center; /* Ensure the transform origin is centered */
+  transition: transform 1s;
+}
+
+.pane {
+  width: 300px;
+  min-height: 400px;
+  position: absolute;
+  backface-visibility: hidden;
+  text-align: center;
+}

@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -14,20 +14,109 @@
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
+} */
+
+@font-face {
+  font-family: 'FarmFont';
+  src: url('/FarmFont.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+
+
+body{
+  background-color: #98cfb2;
+  overflow-x: hidden;
+}
+.pendulum{
+  position:absolute; 
+  width: 50%;
+  height: 25%;
+  background-color: #f8c6cf;
+  top: 50%;
+  left:  50%;
+  border-radius: 5%;
+  align-items: center;
+  border-top: 15px solid #eee7d5;
+  transform: translate(-50%, -50%);
+  }
+.pendulum_box{
+  border-top: 15px solid #eee7d5;
+  display: flex;
+  padding: 80px 20px 0px 20px;
+  flex: 1;
+  left:  50%;
+}
+.ball{
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: #455681;
+  position: relative;
+  transform-origin: 50% -200%;
+  
+}
+  .ball::before{
+    content: '';
+    width: 3px;
+    height: 80px;
+    background-color: #eee7d5;
+    left: 24px;
+    top: -80px;
+    position: absolute;
+  }
+
+.ball.first{
+  animation: firstball .9s alternate ease-in infinite;
+}
+.border-half::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 50%;
+  width: 2px; /* This should match your border width */
+  background-color: currentColor; /* This should match your border color */
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@keyframes firstball{
+  0%{
+    transform: rotate(35deg);
+  }
+  50%{
+    transform: rotate(0deg);
+  }
+}
+
+.ball.last{
+  animation: lastball .9s alternate ease-out infinite;
+}
+
+@keyframes lastball{
+  50%{
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(-35deg);
+  }
+}
+
+.egg {
+  display: block;
+  width: 94.5px;
+  height: 135px;
+  background: #FCD6A4; /* You can change the color of the Egg, but that's fine. */
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; /* Don't change the border-radius, or It'll look bad. */
+  box-shadow: inset 0px 2px 7px #ffe7c7, inset 0px -4px 7px #C79F69; /* You can change the color of the Egg (box-shadow), but that's fine. */
+  animation: turn 2s infinite linear ;
+}
+
+@keyframes turn {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
