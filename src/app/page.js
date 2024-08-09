@@ -1,10 +1,10 @@
 "use client";
+import "./globals.css"
 import Image from "next/image";
 import NewtonCradleTop from "./NewtonCradleTop";
 import NewtonCradleBottom from "./NewtonCradleBottom";
 import TextAnimation from "./TextAnimation";
 import CircleCollage from "./CircleCollage";
-import "./Projects.css";
 import ProjectsPanel from "./ProjectsPanel";
 import { Link, Element } from "react-scroll";
 import ScrollToast from "./ScrollToast";
@@ -134,7 +134,7 @@ export default function Home() {
               <div>level 15</div>
               <Image
                 src="/loganTeenGaming.png"
-                className="mx-auto lg:mt-4 shadow-lg border-2 rounded-full scale-125 xl:scale-150 lg:hover:scale-150 hover:scale-125 duration-500"
+                className="mx-auto lg:mt-4 shadow-lg border-2 rounded-full lg:scale-125 lg:hover:scale-150 hover:scale-125 duration-500"
                 width={125}
                 height={125}
                 alt="Picture of the author"

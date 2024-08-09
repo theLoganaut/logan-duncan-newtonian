@@ -47,7 +47,7 @@ const TextAnimation = ({ text }) => {
       };
 
       // start updating 
-      displayInterval = setInterval(updateDisplayedText, 50); // Speed of transition effect (adjust as needed)
+      displayInterval = setInterval(updateDisplayedText, 50); // speed
 
       return () => clearInterval(displayInterval);
     }

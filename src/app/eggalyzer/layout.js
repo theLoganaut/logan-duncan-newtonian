@@ -1,7 +1,3 @@
-import "../globals.css";
-import "./fonts.css"
-import 'bootstrap/dist/css/bootstrap.min.css';
-
 export const metadata = {
   title: "Eggcellent Choices!",
   description: "Stack up carton to carton!",

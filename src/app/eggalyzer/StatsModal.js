@@ -1,7 +1,6 @@
+"use client"
 import React, { useEffect, useState } from "react";
 import { Modal, Button, Row, Col, Container } from "react-bootstrap";
-import { CopyClipboard } from "flowbite";
-import Carton from "./Carton";
 
 const StatsModal = ({
   show,

@@ -1,15 +1,34 @@
 "use client";
-import Image from "next/image";
+import "../globals.css"
 import Carton from "./Carton";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import StatsModal from "./StatsModal";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
-import { sendData, getSharedData, createShareLink, eggResetVals } from "./serverCalls";
+import {
+  sendData,
+  getSharedData,
+  createShareLink,
+  eggResetVals,
+} from "./serverCalls";
+
+function ParamCheck({setShow, setIsShared, getSharedData, setOrder, setData}) {
+  const params = useSearchParams()
+  useEffect(() => {
+    const shared = params.get("shared");
+    if (shared !== null) {
+      console.log("teest");
+      setShow(true);
+      setIsShared(true);
+      getSharedData(setOrder, setData, shared);
+    }
+  }, [getSharedData, params, setData, setIsShared, setOrder, setShow]);
+  return <></>
+}
 
 export default function Home() {
   const router = useRouter();
   const pathname = usePathname();
-  const params = useSearchParams()
+  // const params = useSearchParams();
   const [show, setShow] = useState(false);
   const [order, setOrder] = useState([]);
   const [data, setData] = useState([]);
@@ -43,26 +62,27 @@ export default function Home() {
   };
 
   const resetCarton = () => {
-    setEggs(eggResetVals)
+    setEggs(eggResetVals);
     router.replace(pathname);
-    setOrder([])
-    setIsShared(false)
-    setShow(false)
-    setData([])
+    setOrder([]);
+    setIsShared(false);
+    setShow(false);
+    setData([]);
   };
 
-  useEffect(() => {
-      const shared = params.get('shared')
-        if (shared !== null) {
-          console.log("teest")
-          setShow(true);
-          setIsShared(true)
-          getSharedData(setOrder, setData, shared);
-      }
-  }, [params]);
+  // useEffect(() => {
+  //   const shared = params.get("shared");
+  //   if (shared !== null) {
+  //     console.log("teest");
+  //     setShow(true);
+  //     setIsShared(true);
+  //     getSharedData(setOrder, setData, shared);
+  //   }
+  // }, [params]);
 
   return (
     <div className="justify-center items-center min-h-[calc(100dvh)] min-w-[calc(100dvw)]">
+      <Suspense><ParamCheck setShow={setShow} setIsShared={setIsShared} getSharedData={getSharedData} setOrder={setOrder} setData={setData} /></Suspense>
       <div className="text-center mb-18 lg:mb-32">
         <p className="text-3xl text-gray-600 -mb-1 pt-16 font-custom">
           Click to find out how your order compares to others
@@ -84,7 +104,9 @@ export default function Home() {
         <button
           onClick={() => sendData(setShow, order, setData)}
           disabled={order.length <= 11 ? true : false}
-          className={`font-custom z-30 text-3xl border-black border-2 shadow-md rounded-lg px-4 py-2 transition-colors ${order.length <= 11 ? "" : "bg-yellow-300"} focus:bg-yellow-600`}
+          className={`font-custom z-30 text-3xl border-black border-2 shadow-md rounded-lg px-4 py-2 transition-colors ${
+            order.length <= 11 ? "" : "bg-yellow-300"
+          } focus:bg-yellow-600`}
         >
           {order.length <= 11 ? `${12 - order.length} left` : "Eggalyze!"}
         </button>
@@ -95,7 +117,9 @@ export default function Home() {
         data={data}
         order={order}
         generatedLink={generatedLink}
-        createShareLink={() => createShareLink(setGeneratedLink, order, data, setGenerated)}
+        createShareLink={() =>
+          createShareLink(setGeneratedLink, order, data, setGenerated)
+        }
         isShared={isShared}
         generated={generated}
         setGenerated={setGenerated}

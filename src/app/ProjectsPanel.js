@@ -84,9 +84,9 @@ const Carousel = () => {
               alt="Picture of the author"
             />
             <div className="px-8">{CentexText}</div>
-            <div class="mb-4 border-gray-200 dark:border-gray-700 flex justify-around mt-4">
-              <ul class="flex flex-wrap -mb-px text-sm font-medium text-center">
-                <li class="me-2">
+            <div className="mb-4 border-gray-200 dark:border-gray-700 flex justify-around mt-4">
+              <ul className="flex flex-wrap -mb-px text-sm font-medium text-center">
+                <li className="me-2">
                   <button
                     className={`${
                       CentexText === allTexts.centex.about
@@ -99,7 +99,7 @@ const Carousel = () => {
                     About
                   </button>
                 </li>
-                <li class="me-2">
+                <li className="me-2">
                   <button
                     className={`${
                       CentexText === allTexts.centex.how ? "text-gray-600" : ""
@@ -113,7 +113,7 @@ const Carousel = () => {
               </ul>
             </div>
             <Link
-              class="inline-block px-4 py-2 border-2 rounded-lg mb-4 bg-gray-800 hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+              className="inline-block px-4 py-2 border-2 rounded-lg mb-4 bg-gray-800 hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
               href={"https://www.centexqrs.com/"}
               target="_blank"
             >
@@ -130,9 +130,9 @@ const Carousel = () => {
             <div className="tracking-widest border-t-2 border-l-2 border-r-2 rounded-t-lg border-gray-200 p-2 mx-4 shadow-2xl">
               {eggText}
             </div>
-            <div class="mb-4 border-gray-200 dark:border-gray-700 flex justify-around border-t-2 mx-4">
-              <ul class="flex flex-wrap text-md tracking-wider font-medium text-center">
-                <li class="me-2">
+            <div className="mb-4 border-gray-200 dark:border-gray-700 flex justify-around border-t-2 mx-4">
+              <ul className="flex flex-wrap text-md tracking-wider font-medium text-center">
+                <li className="me-2">
                   <button
                     className={`${
                       eggText === allTexts.eggText.about ? "text-gray-500" : ""
@@ -143,7 +143,7 @@ const Carousel = () => {
                     About
                   </button>
                 </li>
-                <li class="me-2">
+                <li className="me-2">
                   <button
                     className={`${
                       eggText === allTexts.eggText.how ? "text-gray-500" : ""
@@ -158,7 +158,7 @@ const Carousel = () => {
             </div>
             
             <Link
-              class="inline-block shadow-md px-4 py-2 mb-4 rounded-lg border-2 tracking-wider bg-teal-800 hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+              className="inline-block shadow-md px-4 py-2 mb-4 rounded-lg border-2 tracking-wider bg-teal-800 hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
               id="dashboard-tab"
               href={"https://www.logan-duncan.com/eggalytics"}
               target="_blank"
@@ -187,9 +187,9 @@ const Carousel = () => {
             <div className="border-t-2 border-l-2 border-r-2 rounded-t-lg border-gray-200 p-2 mx-4 shadow-2xl">
               {forgeText}
             </div>
-            <div class="mb-4 border-gray-200 dark:border-gray-700 flex justify-around border-t-2 mx-4">
-              <ul class="flex flex-wrap text-md tracking-wider font-medium text-center">
-                <li class="me-2">
+            <div className="mb-4 border-gray-200 dark:border-gray-700 flex justify-around border-t-2 mx-4">
+              <ul className="flex flex-wrap text-md tracking-wider font-medium text-center">
+                <li className="me-2">
                   <button
                     className={`${
                       forgeText === allTexts.forgeText.about
@@ -202,7 +202,7 @@ const Carousel = () => {
                     About
                   </button>
                 </li>
-                <li class="me-2">
+                <li className="me-2">
                   <button
                     className={`${
                       forgeText === allTexts.forgeText.how
@@ -218,7 +218,7 @@ const Carousel = () => {
               </ul>
             </div>
             <button
-              class="inline-block px-4 py-2 mb-4 rounded-lg border-2 bg-teal-800 hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+              className="inline-block px-4 py-2 mb-4 rounded-lg border-2 bg-teal-800 hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
               id="dashboard-tab"
               // onMouseUp={() => setCentexText(allTexts.centex.how)}
             >
@@ -235,20 +235,20 @@ const Carousel = () => {
             <div className="border-t-2 border-l-2 border-r-2 rounded-t-lg border-gray-500 p-2 mx-4 shadow-2xl">
               {ptmText}
             </div>
-            <div class="mb-4 border-gray-500 dark:border-gray-700 flex justify-around border-t-2 mx-4">
-              <ul class="flex flex-wrap text-md tracking-wider font-medium text-center">
-                <li class="me-2">
+            <div className="mb-4 border-gray-500 dark:border-gray-700 flex justify-around border-t-2 mx-4">
+              <ul className="flex flex-wrap text-md tracking-wider font-medium text-center">
+                <li className="me-2">
                   <button
-                    class="inline-block px-4 py-2 rounded-b-lg bg-[#C08497] hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-400"
+                    className="inline-block px-4 py-2 rounded-b-lg bg-[#C08497] hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-400"
                     id="profile-tab"
                     onClick={() => setPtmText(allTexts.ptmText.about)}
                   >
                     About
                   </button>
                 </li>
-                <li class="me-2">
+                <li className="me-2">
                   <button
-                    class="inline-block px-4 py-2 rounded-b-lg bg-[#C08497] hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-400"
+                    className="inline-block px-4 py-2 rounded-b-lg bg-[#C08497] hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-400"
                     id="dashboard-tab"
                     onMouseUp={() => setPtmText(allTexts.ptmText.how)}
                   >
@@ -258,7 +258,7 @@ const Carousel = () => {
               </ul>
             </div>
             <button
-              class="inline-block shadow-md px-4 py-2 mb-4 rounded-lg border-2 bg-[#C08497] hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+              className="inline-block shadow-md px-4 py-2 mb-4 rounded-lg border-2 bg-[#C08497] hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
               id="dashboard-tab"
               // onMouseUp={() => setCentexText(allTexts.centex.how)}
             >
@@ -267,15 +267,15 @@ const Carousel = () => {
           </div>
           <div className="pane font-sans border-2 border-gray-500 bg-sky-400 rounded-xl shadow-xl text-black">
             <div className="inline-flex scale-150 mt-16">
-              <div class="irl-logo align-items-end gap-1">
-                <div class="flex">
+              <div className="irl-logo align-items-end gap-1">
+                <div className="flex">
                   <svg
                     viewBox="0 0 100 100"
                     xmlns="http://www.w3.org/2000/svg"
                     role="img"
                     aria-hidden="true"
                     focusable="false"
-                    class="flex-1 colors ic-inline h-12"
+                    className="flex-1 colors ic-inline h-12"
                   >
                     <path
                       d="M20.2941176,0 L33.3333333,0 L33.3333333,0 L33.3333333,33.3333333 L0,33.3333333 L0,20.2941176 C-4.92531394e-15,
@@ -287,50 +287,50 @@ const Carousel = () => {
                       y="0"
                       width="33.3333333"
                       height="33.3333333"
-                      class="fill-[#33b566]"
+                      className="fill-[#33b566]"
                     ></rect>
                     <path
                       d="M66.6666667,0 L79.7058824,0 C90.914014,-5.61161407e-15 100,9.08598596 100,20.2941176 L100,33.3333333 L100,
               33.3333333 L66.6666667,33.3333333 L66.6666667,0 Z"
-                      class="fill-[#dd3263]"
+                      className="fill-[#dd3263]"
                     ></path>
                     <rect
                       x="0"
                       y="33.3333333"
                       width="33.3333333"
                       height="33.3333333"
-                      class="fill-[#1faff5]"
+                      className="fill-[#1faff5]"
                     ></rect>
                     <rect
                       x="33.3333333"
                       y="33.3333333"
                       width="33.3333333"
                       height="33.3333333"
-                      class="fill-[#78cc7d]"
+                      className="fill-[#78cc7d]"
                     ></rect>
                     <rect
                       x="66.6666667"
                       y="33.3333333"
                       width="33.3333333"
                       height="33.3333333"
-                      class="fill-[#f56e4b]"
+                      className="fill-[#f56e4b]"
                     ></rect>
                     <path
                       d="M0,66.6666667 L33.3333333,66.6666667 L33.3333333,100 L20.2941176,100 C9.08598596,
                100 -2.18011342e-15,90.914014 0,79.7058824 L0,66.6666667 L0,66.6666667 Z"
-                      class="fill-[#42cee0]"
+                      className="fill-[#42cee0]"
                     ></path>
                     <rect
                       x="33.3333333"
                       y="66.6666667"
                       width="33.3333333"
                       height="33.3333333"
-                      class="fill-[#c2dc80]"
+                      className="fill-[#c2dc80]"
                     ></rect>
                     <path
                       d="M66.6666667,66.6666667 L100,66.6666667 L100,79.7058824 C100,90.914014 90.914014,100 79.7058824,100 L66.6666667,100 L66.6666667,
                100 L66.6666667,66.6666667 Z"
-                      class="fill-[#ffae4a]"
+                      className="fill-[#ffae4a]"
                     ></path>
                     <path
                       d="M24.492 64.168c-.786-1.913.111-4.107 2.004-4.902s4.065.112 4.851 2.024a20.6
@@ -346,13 +346,13 @@ const Carousel = () => {
                     role="img"
                     aria-hidden="true"
                     focusable="false"
-                    class="flex-1 irl-logo-text ic-inline irl-logo-text h-10"
+                    className="flex-1 irl-logo-text ic-inline irl-logo-text h-10"
                   >
                     <g
                       stroke="none"
-                      stroke-width="1"
+                      strokeWidth="1"
                       fill="none"
-                      fill-rule="evenodd"
+                      fillRule="evenodd"
                     >
                       <path
                         d="M4.14404432,12.6776335 C3.26500022,12.6776335 2.60572704,12.4756634 2.16620499,
@@ -394,9 +394,9 @@ const Carousel = () => {
                     </g>
                   </svg>
                 </div>{" "}
-                <div class="text-xs line-xs text-uppercase font-extrabold mb-6 flex-shrink-0 flex-basis-100 gap-1 d-flex text-gray-500">
+                <div className="text-xs line-xs text-uppercase font-extrabold mb-6 flex-shrink-0 flex-basis-100 gap-1 d-flex text-gray-500">
                   IN REAL LIFE
-                  <span class="text-3xs line-3xs text-gray-400 pt-4"> TM</span>
+                  <span className="text-3xs line-3xs text-gray-400 pt-4"> TM</span>
                 </div>
               </div>
             </div>
@@ -405,20 +405,20 @@ const Carousel = () => {
               {irlText}
             </div>
             
-            <div class="mb-4 border-gray-500 dark:border-gray-700 flex justify-around border-t-2 mx-4">
-              <ul class="flex flex-wrap text-md text-center">
-                <li class="me-2 font-sans">
+            <div className="mb-4 border-gray-500 dark:border-gray-700 flex justify-around border-t-2 mx-4">
+              <ul className="flex flex-wrap text-md text-center">
+                <li className="me-2 font-sans">
                   <button
-                    class="inline-block px-4 py-2 rounded-b-lg bg-sky-200 hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-400"
+                    className="inline-block px-4 py-2 rounded-b-lg bg-sky-200 hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-400"
                     id="profile-tab"
                     onClick={() => setIrlText(allTexts.irlText.about)}
                   >
                     About
                   </button>
                 </li>
-                <li class="me-2">
+                <li className="me-2">
                   <button
-                    class="inline-block px-4 py-2 rounded-b-lg bg-sky-200 hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-400"
+                    className="inline-block px-4 py-2 rounded-b-lg bg-sky-200 hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-400"
                     id="dashboard-tab"
                     onMouseUp={() => setIrlText(allTexts.irlText.how)}
                   >
@@ -428,7 +428,7 @@ const Carousel = () => {
               </ul>
             </div>
             <button
-              class="inline-block px-4 py-2 mb-4 rounded-lg border-2 bg-sky-200 hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+              className="inline-block px-4 py-2 mb-4 rounded-lg border-2 bg-sky-200 hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
               id="dashboard-tab"
               // onMouseUp={() => setCentexText(allTexts.centex.how)}
             >

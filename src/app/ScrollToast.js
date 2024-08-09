@@ -1,6 +1,5 @@
 import React from 'react';
 import { BsArrowUp, BsArrowDown } from 'react-icons/bs';
-import 'tailwindcss/tailwind.css';
 
 const ScrollToast = () => {
   const scrollToTop = () => {
