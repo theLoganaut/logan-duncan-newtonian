@@ -5,22 +5,30 @@ const CircleCollage = ({ items }) => {
   const [flutterCircle, setFlutterCircle] = useState([]);
   const [hoveredCircle, setHoveredCircle] = useState(null);
   const [largestCircleSize, setLargestCircleSize] = useState(0);
+  
 
   useEffect(() => {
     const calculateCircles = () => {
       const maxWeight = Math.max(...items.map((item) => item.weight));
-
+      
       // get screen dimensions
       const screenWidth = window.innerWidth;
       const screenHeight = window.innerHeight;
       const targetSize = Math.min(screenWidth, screenHeight) / 2; // size for collage
+      let sizeMulti = 1;
+      console.log(screenWidth)
+      if (screenWidth > 600 && screenWidth < 800) {
+        console.log("huh")
+        sizeMulti = 1.1
+      }
 
       // get circle properties
+      //? multi needed to correct for some circles being hidden
       const circles = items
         .map((item, index) => ({
           ...item,
-          size: (item.weight / maxWeight) * targetSize, // circle size relative to max weight and target size
-          radius: ((item.weight / maxWeight) * targetSize) / 2, // radius for position calculations
+          size: ((item.weight / maxWeight) * targetSize) / sizeMulti, // circle size relative to max weight and target size
+          radius: ((item.weight / maxWeight) * targetSize) / (sizeMulti * 2), // radius for position calculations
           index,
         }))
         .sort((a, b) => b.weight - a.weight); // sort circles by weight in descending order
@@ -130,19 +138,23 @@ const CircleCollage = ({ items }) => {
       setHoveredCircle(null);
     } else {
       setHoveredCircle(circleIndex);
+      setFlutterCircle(null);
     }
   };
 
+  //! need to not flutter on mobile
   const handleFlutter = (circleIndex) => {
-    if (flutterCircle != null) {
-      setFlutterCircle(null);
-    } else {
-      setFlutterCircle(circleIndex);
+    if (window.innerWidth > 1000) {
+      if (flutterCircle != null) {
+        setFlutterCircle(null);
+      } else {
+        setFlutterCircle(circleIndex);
+      }
     }
   };
 
   return (
-    <div className="relative base:translate-x-12 sm:translate-x-0 md:scale-75">
+    <div className="relative base:translate-x-12 sm:translate-x-0 sm:scale-75">
       {circles.map((circle, index) => (
         <div
           key={index}
@@ -190,7 +202,7 @@ const CircleCollage = ({ items }) => {
               onMouseEnter={() => handleFlutter(index)}
               className={`${
                 hoveredCircle === index
-                  ? "items-center duration-1000 -translate-y-8 md:-translate-y-24 text-center"
+                  ? "items-center duration-1000 -translate-y-2 md:-translate-y-24 text-center"
                   : "duration-1000"
               } underline cursor-pointer md:text-3xl`}
             >
