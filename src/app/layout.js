@@ -11,7 +11,7 @@ const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth overflow-x-hidden">
       <link rel="icon" href="/profilePic.ico" sizes="any" />
       {/* <script async src="../path/to/flowbite/dist/flowbite.min.js"></script> */}
       <body className="bg-[#98cfb2]">{children}</body>

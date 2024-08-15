@@ -1,5 +1,5 @@
 "use client";
-import "./globals.css"
+import "./globals.css";
 import Image from "next/image";
 import NewtonCradleTop from "./NewtonCradleTop";
 import NewtonCradleBottom from "./NewtonCradleBottom";
@@ -80,15 +80,16 @@ export default function Home() {
     },
   ];
   return (
-    <div className="bg-[#98cfb2] w-full justify-center content-center">
-      <ScrollToast />
-      <div className="h-screen w-full mx-auto">
+    <div className="bg-[#98cfb2] justify-center content-center mx-auto">
+      <div className="h-screen mx-auto">
+        {/* <div className="overflow-hidden"> */}
         <NewtonCradleTop />
         <NewtonCradleBottom />
+        {/* </div> */}
         <div className="w-full text-center absolute text-2xl mt-8 md:mt-24 top-1/3 left-1/2 -translate-x-1/2 translate-y-1/2 font-mono">
           Human that codes.
         </div>
-        <div className="absolute text-2xl top-1/3 mt-20 md:mt-32 left-1/2 w-max -translate-x-1/2 translate-y-1/2 font-mono">
+        <div className="absolute text-center text-2xl top-1/3 mt-20 md:mt-32 left-1/2 w-full -translate-x-1/2 translate-y-1/2 font-mono mx-auto">
           Awaiting my AI replacement.
         </div>
         <div className="absolute text-xl top-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 font-mono">
@@ -112,50 +113,52 @@ export default function Home() {
         </div>
       </div>
       <Element name="bio-nary" />
-      <div className="h-min-screen font-mono pt-12">
-        <div className="text-center p-2 border-2 bg-[#4db6ac] border-black bg-opacity-30 rounded-lg m-12 shadow-xl md:w-1/2 md:mx-auto">
-          <div className="flex flex-wrap py-2">
+      <div className="h-min-screen font-mono pt-12 -mx-8">
+        <div className="text-center lg:py-2 border-2 bg-[#4db6ac] border-black bg-opacity-30 rounded-lg m-12 shadow-xl md:w-1/2 md:mx-auto px-2">
+          <div className="flex flex-wrap lg:py-2">
             <div className="w-full lg:w-1/4 p-1 lg:p-4 my-auto">
               <div>Unevolved</div>
               <Image
                 src="/loganPlaneGameboy.png"
-                className="mx-auto lg:mt-4 shadow-lg border-2 rounded-full xl:scale-125 lg:hover:scale-150 hover:scale-125 duration-500"
+                className="mx-auto mb-4 mt-3 lg:mb-0 z-10 lg:mt-4 shadow-lg border-2 rounded-full xl:scale-125 lg:hover:scale-150 hover:scale-125 duration-500"
                 width={125}
                 height={125}
                 alt="Picture of the author"
               />
             </div>
-            <div className="w-full lg:w-3/4 p-1 lg:border-l-2 border-gray-500">
-              <TextAnimation text={text} />
+            <div className="w-full lg:w-3/4 border-gray-500"> 
+                <TextAnimation text={text} />
             </div>
           </div>
           <div className="flex flex-wrap lg:py-2">
-            <div className="w-full lg:w-1/4 p-4 lg:p-4 my-auto">
-              <div>level 15</div>
+            <div className="w-full lg:w-1/4 p-2 lg:p-4 my-auto">
+              <div className="pb-2">level 15</div>
               <Image
                 src="/loganTeenGaming.png"
-                className="mx-auto lg:mt-4 shadow-lg border-2 rounded-full lg:scale-125 lg:hover:scale-150 hover:scale-125 duration-500"
+                className="mx-auto z-10 mb-4 mt-3 lg:mb-0 lg:mt-4 shadow-lg border-2 rounded-full lg:hover:scale-150 hover:scale-125 duration-500"
                 width={125}
                 height={125}
                 alt="Picture of the author"
               />
             </div>
-            <div className="w-full lg:w-3/4 p-1 lg:border-l-2 border-gray-500">
-              <TextAnimation text={text2} />
+            <div className="w-full lg:w-3/4 border-gray-500">     
+                <TextAnimation text={text2} />
             </div>
           </div>
           <div className="flex flex-wrap lg:py-2">
-            <div className="w-full lg:w-1/4 p-1 lg:p-4 my-auto">
+            <div className="w-full lg:w-1/4 p-1 lg:p-4 border-gray-500 my-auto h-full">
               <div>level 24</div>
               <Image
                 src="/loganlevel24.jpg"
-                className="mx-auto lg:mt-4 lg:my-4 shadow-lg border-2 rounded-full xl:scale-125 lg:hover:scale-150 hover:scale-125 duration-500"
+                className="mx-auto z-10 mb-4 mt-3 lg:mb-0 lg:mt-4 items-center h-full lg:my-4 shadow-lg border-2 rounded-full xl:scale-125 lg:hover:scale-150 hover:scale-125 duration-500"
                 width={125}
                 height={125}
                 alt="Picture of the author"
               />
             </div>
-            <div className="w-full lg:w-3/4 p-1 lg:border-l-2 border-gray-500"><TextAnimation text={text3} /></div>
+            <div className="w-full lg:w-3/4 my-auto">    
+                <TextAnimation text={text3} />
+            </div>
           </div>
         </div>
       </div>
@@ -166,9 +169,10 @@ export default function Home() {
         </div>
       </div>
       <Element name="implants" />
-      <div className="min-h-screen font-mono md:mb-3 scale-90 md:text-2xl">
+      <div className="min-h-screen font-mono md:mb-3 text-xs sm:text-2xl -ml-12 sm:-ml-0">
         <CircleCollage items={items} />
       </div>
+      {/* <ScrollToast /> */}
     </div>
   );
 }

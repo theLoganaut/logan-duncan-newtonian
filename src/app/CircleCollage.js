@@ -142,7 +142,7 @@ const CircleCollage = ({ items }) => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative base:translate-x-12 sm:translate-x-0 md:scale-75">
       {circles.map((circle, index) => (
         <div
           key={index}

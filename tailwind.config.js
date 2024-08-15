@@ -28,6 +28,13 @@ module.exports = {
         '3xs': ['.625rem', '.625rem']
       }
     },
+    screens: {
+      'base': '50px',
+      'xs': '370px',
+      'sm': '576px',
+      'md': '960px',
+      'lg': '1440px',
+    },
   },
   plugins: [
     require('flowbite/plugin')

@@ -15,6 +15,11 @@
     --background-end-rgb: 0, 0, 0;
   }
 } */
+@layer utilities {
+  .pause {
+    animation-play-state: paused;
+  }
+}
 
 @font-face {
   font-family: 'FarmFont';
@@ -29,19 +34,14 @@ body{
   background-color: #98cfb2;
   overflow-x: hidden;
 }
-.pendulum{
-  position:absolute; 
-  width: 50%;
-  height: 25%;
-  background-color: #f8c6cf;
-  top: 50%;
-  left:  50%;
-  border-radius: 5%;
-  align-items: center;
-  border-top: 15px solid #eee7d5;
-  transform: translate(-50%, -50%);
-  }
+
 .pendulum_box{
+  border-top: 15px solid #eee7d5;
+  display: flex;
+  padding: 80px 46px 0px 46px;
+  flex: 1;
+}
+.pendulum_box_bottom{
   border-top: 15px solid #eee7d5;
   display: flex;
   padding: 80px 20px 0px 20px;
@@ -76,8 +76,8 @@ body{
   top: 0;
   left: 0;
   height: 50%;
-  width: 2px; /* This should match your border width */
-  background-color: currentColor; /* This should match your border color */
+  width: 2px; 
+  background-color: currentColor; 
 }
 
 @keyframes firstball{
