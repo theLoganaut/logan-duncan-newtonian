@@ -1,5 +1,6 @@
 "use client";
 import "./globals.css";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import NewtonCradleTop from "./NewtonCradleTop";
 import NewtonCradleBottom from "./NewtonCradleBottom";
@@ -15,7 +16,7 @@ export default function Home() {
   const text2 =
     "Just some of the infinite questions I asked and tried to find out, before realizing I could find answers by making something myself. No that would be too hard… well until I grew up. Now I see that I can make nearly anything on the web with React, bring it to mobile with React Native, and give the people servers with Amazon!";
   const text3 =
-    "I’ve got a problem though… I’m a dreamer with a perfectionist streak so it's hard creating something that’s good enough for me and wouldn’t take several years by myself. There’s a junkyard of scrapped projects but I’ve kept everything I’ve learned and I’m ready to apply it to anything I do. Currently I’m applying that to creating and tuning a RL algorithm to play doom64. That and an ASCII ‘idle’ game that runs in the browser. I do some QR design and creation for businesses called CentexQRs as well but it’s sunsetting, and I’m really looking forward to my next big project under someone this time!";
+    "I’ve got a problem though… I’m a dreamer with a perfectionist streak so it's hard creating something that’s good enough for me and wouldn’t take several years by myself. There’s a junkyard of scrapped projects but I’ve kept everything I’ve learned and I’m ready to apply it to anything I do. Currently I’m applying that to creating and tuning a ML algorithm to play doom64. That and an ASCII ‘idle’ game that runs in the browser. I do some QR design and creation for businesses called CentexQRs as well but it’s sunsetting, and I’m really looking forward to my next big project with a team this time!";
 
   const items = [
     {
@@ -79,19 +80,29 @@ export default function Home() {
       text: "Containers are a miracle. Separate environments for testing, development, production, platforms, environments. Docker and Kubernetes might not be a breeze but its definitely easier.",
     },
   ];
+
+  const [flipped, setFlipped] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFlipped((prev) => !prev);
+    }, 3500); // flip every 2 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="bg-[#98cfb2] justify-center content-center mx-auto">
       <div className="h-screen mx-auto">
-        {/* <div className="overflow-hidden"> */}
         <NewtonCradleTop />
         <NewtonCradleBottom />
-        {/* </div> */}
         <div className="w-full text-center absolute text-2xl mt-8 md:mt-24 top-1/3 left-1/2 -translate-x-1/2 translate-y-1/2 font-mono">
           Human that codes.
         </div>
         <div className="absolute text-center text-2xl top-1/3 mt-20 md:mt-32 left-1/2 w-full -translate-x-1/2 translate-y-1/2 font-mono mx-auto">
           Awaiting my AI replacement.
         </div>
+
         <div className="absolute text-xl top-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 font-mono">
           <div className="text-center">
             <Link to="bio-nary" smooth={true} duration={50}>
@@ -126,8 +137,8 @@ export default function Home() {
                 alt="Picture of the author"
               />
             </div>
-            <div className="w-full lg:w-3/4 border-gray-500"> 
-                <TextAnimation text={text} />
+            <div className="w-full lg:w-3/4 border-gray-500">
+              <TextAnimation text={text} />
             </div>
           </div>
           <div className="flex flex-wrap lg:py-2">
@@ -141,23 +152,55 @@ export default function Home() {
                 alt="Picture of the author"
               />
             </div>
-            <div className="w-full lg:w-3/4 border-gray-500">     
-                <TextAnimation text={text2} />
+            <div className="w-full lg:w-3/4 border-gray-500">
+              <TextAnimation text={text2} />
             </div>
           </div>
           <div className="flex flex-wrap lg:py-2">
-            <div className="w-full lg:w-1/4 p-1 lg:p-4 border-gray-500 my-auto h-full">
+            <div className="w-full lg:w-1/4 p-1 lg:p-4 border-gray-500 md:mt-16">
               <div>level 24</div>
-              <Image
-                src="/loganlevel24.jpg"
-                className="mx-auto z-10 mb-4 mt-3 lg:mb-0 lg:mt-4 items-center h-full lg:my-4 shadow-lg border-2 rounded-full xl:scale-125 lg:hover:scale-150 hover:scale-125 duration-500"
-                width={125}
-                height={125}
-                alt="Picture of the author"
-              />
+              <div
+              className="mb-40"
+                style={{
+                  transformStyle: "preserve-3d",
+                  transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
+                  transition: "transform 2s",
+                }}
+              >
+                <div
+                  className="absolute w-full h-full"
+                  style={{
+                    backfaceVisibility: "hidden",
+                    transform: "rotateY(0deg)",
+                  }}
+                >
+                  <Image
+                    src="/glassfixoutlinePFP500x500.jpg"
+                    className="mx-auto mb-4 mt-3 lg:mb-0 lg:mt-4 shadow-lg border-2 rounded-full lg:hover:scale-150 hover:scale-125 duration-500"
+                    width={125}
+                    height={125}
+                    alt="Picture of the author"
+                  />
+                </div>
+                <div
+                  className="absolute w-full h-full"
+                  style={{
+                    backfaceVisibility: "hidden",
+                    transform: "rotateY(180deg)",
+                  }}
+                >
+                  <Image
+                    src="/loganlevel24.jpg"
+                    className="mx-auto mb-4 mt-3 lg:mb-0 lg:mt-4 items-center lg:my-4 shadow-lg border-2 rounded-full xl:scale-125 lg:hover:scale-150 hover:scale-125 duration-500"
+                    width={125}
+                    height={125}
+                    alt="Picture of the author"
+                  />
+                </div>
+              </div>
             </div>
-            <div className="w-full lg:w-3/4 my-auto">    
-                <TextAnimation text={text3} />
+            <div className="w-full lg:w-3/4 my-auto">
+              <TextAnimation text={text3} />
             </div>
           </div>
         </div>
@@ -172,7 +215,7 @@ export default function Home() {
       <div className="min-h-screen font-mono md:mb-3 text-xs sm:text-2xl -ml-12 sm:-ml-0">
         <CircleCollage items={items} />
       </div>
-      {/* <ScrollToast /> */}
+      <ScrollToast />
     </div>
   );
 }
