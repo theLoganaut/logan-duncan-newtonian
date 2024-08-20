@@ -142,7 +142,6 @@ const CircleCollage = ({ items }) => {
     }
   };
 
-  //! need to not flutter on mobile
   const handleFlutter = (circleIndex) => {
     if (window.innerWidth > 1000) {
       if (flutterCircle != null) {

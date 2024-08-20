@@ -100,7 +100,7 @@ export const createShareLink = async (setGeneratedLink, order, data, setGenerate
 
     const data = await response.json();
     console.log("Success:", data);
-    const link = `https://www.logan-duncan.com/eggalyzer/shared=${data.Id}`;
+    const link = `https://www.logan-duncan.com/eggalyzer?shared=${data.Id}`;
     setGeneratedLink(link);
     setGenerated(true)
     //build string from return Id

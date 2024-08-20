@@ -40,13 +40,15 @@ export default function Home() {
   const [eggs, setEggs] = useState(eggResetVals);
 
   const changeHover = (eggnum, bool) => {
-    setEggs((eggs) => ({
-      ...eggs,
-      [eggnum]: {
-        ...eggs[eggnum],
-        hover: bool,
-      },
-    }));
+    if (window.innerWidth > 1000) {
+      setEggs((eggs) => ({
+        ...eggs,
+        [eggnum]: {
+          ...eggs[eggnum],
+          hover: bool,
+        },
+      }));
+    }
   };
 
   const crackEgg = (eggnum, bool) => {
@@ -87,7 +89,7 @@ export default function Home() {
         <p className="text-3xl text-gray-600 -mb-1 pt-16 font-custom">
           Click to find out how your order compares to others
         </p>
-        <p className="text-9xl text-gray-800 pb-4 font-custom">
+        <p className="text-5xl md:text-9xl text-gray-800 pb-4 font-custom">
           Eggcellent Choices!
         </p>
       </div>

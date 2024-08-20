@@ -142,7 +142,7 @@ const StatsModal = ({
                     </div>
                   </div>
                   <div>
-                    <div className="text-2xl">Most Eggnored</div>
+                    <div className="text-2xl">Most Eggxotic</div>
                     <div className="text-med w-10 h-10 mx-auto border-black border-1 shadow-lg flex items-center justify-center rounded-full transition duration-300 ease-in-out bg-yellow-100 hover:bg-yellow-300">
                       egg {current.indexOf(minValue) + 1}
                     </div>

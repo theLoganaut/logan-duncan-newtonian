@@ -160,7 +160,7 @@ const Carousel = () => {
             <Link
               className="inline-block shadow-md px-4 py-2 mb-4 rounded-lg border-2 tracking-wider bg-teal-800 hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
               id="dashboard-tab"
-              href={"https://www.logan-duncan.com/eggalytics"}
+              href={"https://www.logan-duncan.com/eggalyzer"}
               target="_blank"
             >
               Crack some eggs!

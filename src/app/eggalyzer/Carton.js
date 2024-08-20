@@ -5,7 +5,7 @@ import EggHolder from "./EggHolder.js";
 
 const Carton = ({eggs, changeHover, crackEgg}) => {
   return (
-    <div className="relative w-full scale-y-50 md:scale-y-100">
+    <div className="relative w-full scale-y-50 sm:scale-y-100">
       <div className="relative w-3/4 lg:w-1/2 h-36 bg-yellow-700 p-4 rounded-lg mx-auto">
         {/* Top eggs */}
         <div className="absolute -top-14 left-0 right-0 h-48 flex justify-around items-center space-x-2 px-2">
