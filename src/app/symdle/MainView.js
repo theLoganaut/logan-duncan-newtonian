@@ -74,6 +74,8 @@ const MainView = () => {
 
   // Load all stats from localStorage
   const loadStatsData = useCallback(() => {
+    if (typeof window === 'undefined') return { history: [] };
+
     const allStats = { history: [] };
 
     // Get all localStorage keys that start with 'daily-'
@@ -123,7 +125,9 @@ const MainView = () => {
       allStats.allTimeBest.cpmDate = allStats.history.find(h => h.cpm === allStats.allTimeBest.cpm)?.date;
 
       // Save all-time best to localStorage
-      localStorage.setItem('stats-allTimeBest', JSON.stringify(allStats.allTimeBest));
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('stats-allTimeBest', JSON.stringify(allStats.allTimeBest));
+      }
     }
 
     // Calculate averages
@@ -143,7 +147,9 @@ const MainView = () => {
       };
 
       // Save averages to localStorage
-      localStorage.setItem('stats-averages', JSON.stringify(allStats.averages));
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('stats-averages', JSON.stringify(allStats.averages));
+      }
     }
 
     return allStats;
@@ -151,6 +157,8 @@ const MainView = () => {
 
   // Check if daily challenge is already completed today
   const checkDailyStatus = useCallback(() => {
+    if (typeof window === 'undefined') return false;
+
     const dateKey = getTodaysDateKey();
     const storedData = localStorage.getItem(`daily-${dateKey}`);
     if (storedData) {
@@ -167,6 +175,8 @@ const MainView = () => {
 
   // Get remaining attempts for today
   const getRemainingAttempts = useCallback(() => {
+    if (typeof window === 'undefined') return 3;
+
     const dateKey = getTodaysDateKey();
     const storedData = localStorage.getItem(`daily-${dateKey}`);
     if (storedData) {
@@ -183,6 +193,8 @@ const MainView = () => {
 
   // Get all attempts for today
   const getAllAttemptsForToday = useCallback(() => {
+    if (typeof window === 'undefined') return [];
+
     const dateKey = getTodaysDateKey();
     const storedData = localStorage.getItem(`daily-${dateKey}`);
     if (storedData) {
@@ -199,6 +211,8 @@ const MainView = () => {
 
   // Save attempt to localStorage
   const saveAttempt = (stats) => {
+    if (typeof window === 'undefined') return;
+
     const dateKey = getTodaysDateKey();
     const storedData = localStorage.getItem(`daily-${dateKey}`);
     let data = storedData ? JSON.parse(storedData) : { attempts: [], attemptsLeft: 3, completed: false };
@@ -216,6 +230,8 @@ const MainView = () => {
 
   // Mark daily as completed
   const markDailyCompleted = () => {
+    if (typeof window === 'undefined') return;
+
     const dateKey = getTodaysDateKey();
     const storedData = localStorage.getItem(`daily-${dateKey}`);
     let data = storedData ? JSON.parse(storedData) : { attempts: [], attemptsLeft: 0, completed: false };
@@ -455,61 +471,61 @@ const MainView = () => {
     }
   };
 
-const generateTypingArray = () => {
-  if (activeTab === "daily" && dailySeed !== null) {
+  const generateTypingArray = () => {
+    if (activeTab === "daily" && dailySeed !== null) {
+      const array = [];
+      const totalItems = 7;
+
+      for (let i = 0; i < totalItems; i++) {
+        array.push(getDailyItem(i));
+      }
+
+      setDailyIndex(totalItems);
+      return array;
+    }
+
     const array = [];
     const totalItems = 7;
+    const programmerWordCount = Math.floor((programmerWordsLevel / 10) * totalItems);
 
-    for (let i = 0; i < totalItems; i++) {
-      array.push(getDailyItem(i));
+    for (let i = 0; i < programmerWordCount; i++) {
+      let newItem = generateProgrammerWord();
+      while (array.includes(newItem)) {
+        newItem = generateProgrammerWord();
+      }
+      array.push(newItem);
     }
 
-    setDailyIndex(totalItems);
-    return array;
-  }
-
-  const array = [];
-  const totalItems = 7;
-  const programmerWordCount = Math.floor((programmerWordsLevel / 10) * totalItems);
-
-  for (let i = 0; i < programmerWordCount; i++) {
-    let newItem = generateProgrammerWord();
-    while (array.includes(newItem)) {
-      newItem = generateProgrammerWord();
+    for (let i = programmerWordCount; i < totalItems; i++) {
+      let newItem = getRandomSymbol();
+      while (array.includes(newItem)) {
+        newItem = getRandomSymbol();
+      }
+      array.push(newItem);
     }
-    array.push(newItem);
-  }
 
-  for (let i = programmerWordCount; i < totalItems; i++) {
-    let newItem = getRandomSymbol();
-    while (array.includes(newItem)) {
-      newItem = getRandomSymbol();
+    return array.sort(() => Math.random() - 0.5);
+  };
+
+  useEffect(() => {
+    if (letters.length === 0) {
+      setLetters(generateTypingArray());
+      setUserInput("");
     }
-    array.push(newItem);
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [letters.length]);
 
-  return array.sort(() => Math.random() - 0.5);
-};
-
-useEffect(() => {
-  if (letters.length === 0) {
-    setLetters(generateTypingArray());
-    setUserInput("");
-  }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [letters.length]);
-
-useEffect(() => {
-  if (letters.length > 0) {
-    setLetters(generateTypingArray());
-    setUserInput("");
-    setCorrect(0);
-    setIsActive(false);
-    const newTimeLimit = activeTab === "daily" ? dailyTimer : endGoal;
-    setTimeLeft(newTimeLimit * 1000);
-  }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [programmerWordsLevel, activeTab, dailySeed, dailyTimer, endGoal]);
+  useEffect(() => {
+    if (letters.length > 0) {
+      setLetters(generateTypingArray());
+      setUserInput("");
+      setCorrect(0);
+      setIsActive(false);
+      const newTimeLimit = activeTab === "daily" ? dailyTimer : endGoal;
+      setTimeLeft(newTimeLimit * 1000);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [programmerWordsLevel, activeTab, dailySeed, dailyTimer, endGoal]);
 
   useEffect(() => {
     let timer;
@@ -777,7 +793,7 @@ useEffect(() => {
             <div>
               <button
                 onClick={() => {
-                  if (window.confirm('Are you sure you want to remove all localStorage data? This cannot be undone.')) {
+                  if (typeof window !== 'undefined' && window.confirm('Are you sure you want to remove all localStorage data? This cannot be undone.')) {
                     localStorage.clear();
                     alert('All localStorage data has been removed!');
                     window.location.reload();
