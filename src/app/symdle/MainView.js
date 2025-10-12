@@ -441,7 +441,7 @@ const MainView = () => {
     return symbolList[Math.floor(random() * symbolList.length)];
   };
 
-  const getDailyItem = (index) => {
+  const getDailyItem = useCallback((index) => {
     if (dailySeed === null) return getRandomSymbol();
 
     const rng = seededRandom(dailySeed + index);
@@ -452,7 +452,7 @@ const MainView = () => {
     } else {
       return getRandomSymbol(rng);
     }
-  };
+  }, [dailySeed, dailyProgrammerLevel]);
 
   const generateTypingArray = useCallback(() => {
     if (activeTab === "daily" && dailySeed !== null) {
@@ -488,7 +488,7 @@ const MainView = () => {
     }
 
     return array.sort(() => Math.random() - 0.5);
-  }, [activeTab, dailySeed, programmerWordsLevel]);
+  }, [activeTab, dailySeed, programmerWordsLevel, getDailyItem]);
 
   useEffect(() => {
     if (letters.length === 0) {
@@ -730,7 +730,7 @@ const MainView = () => {
                 <span className="text-gray-600" style={{ textShadow: '1px 1px 0 white, -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white' }}>|</span>
                 <span className="text-gray-600" style={{ textShadow: '1px 1px 0 white, -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white' }}>£</span>
               </span>
-              {' '}(Symdle)! It's a daily currently offline -dle to help you improve your symbol typing skills along with 'programmer' word structures of arrays, objects, and references among others.
+              {' '}(Symdle)! It&apos;s a daily currently offline -dle to help you improve your symbol typing skills along with &apos;programmer&apos; word structures of arrays, objects, and references among others.
             </p>
 
             <p><strong>Infinite</strong> - Just zone out and hit some keys. No stat saving.</p>
@@ -751,7 +751,7 @@ const MainView = () => {
               </button>
               {expandedSections.keyboard && (
                 <p className="mt-2 pl-4">
-                  You can change the keys that light up at the bottom to common keyboard configurations, or set your own and change the grid to be your keyboard. Keyboard customizing supports up to 4 layers, with L1 and L2 across the top and L3 and L4 on the bottom. Assign new keys by clicking a key and pressing the new key you want there, check speed assign to continue reassigning until you cancel. Customize the exact layout by changing to your specific row and column amount, clicking keys you want disabled. Name, save, and switch between layouts you've made.
+                  You can change the keys that light up at the bottom to common keyboard configurations, or set your own and change the grid to be your keyboard. Keyboard customizing supports up to 4 layers, with L1 and L2 across the top and L3 and L4 on the bottom. Assign new keys by clicking a key and pressing the new key you want there, check speed assign to continue reassigning until you cancel. Customize the exact layout by changing to your specific row and column amount, clicking keys you want disabled. Name, save, and switch between layouts you&apos;ve made.
                 </p>
               )}
             </div>
@@ -766,7 +766,7 @@ const MainView = () => {
               </button>
               {expandedSections.future && (
                 <p className="mt-2 pl-4">
-                  I'll probably drop this for a while but potentially an online mode for leaderboards and friend lists. Other languages and specific programming language challenges. More specific keyboard layouts.
+                  I&apos;ll probably drop this for a while but potentially an online mode for leaderboards and friend lists. Other languages and specific programming language challenges. More specific keyboard layouts.
                 </p>
               )}
             </div>
@@ -948,7 +948,7 @@ const MainView = () => {
           onClick={() => setShowInfoModal(!showInfoModal)}
           className="px-6 py-2 rounded-lg font-medium transition-all bg-gray-600 text-white hover:bg-gray-700"
         >
-          What's this?
+          What&apos;s this?
         </button>
       </div>
 
