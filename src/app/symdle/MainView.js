@@ -5,6 +5,8 @@ import React, { useEffect, useState, useCallback } from "react";
 const MainView = () => {
   const symbolList = "!@#$%^&*()-_+=[]{}|;:'\",/?<>";
 
+  // Add this at the top of your component
+  const [isMounted, setIsMounted] = useState(false);
   const [endGoal, setEndGoal] = useState(60);
   const [programmerWordsLevel, setProgrammerWordsLevel] = useState(0);
 
@@ -20,7 +22,7 @@ const MainView = () => {
   const [dailyProgrammerLevel, setDailyProgrammerLevel] = useState(0);
   const [dailyTimer, setDailyTimer] = useState(60);
 
-  const [timeLeft, setTimeLeft] = useState(endGoal * 1000);
+  const [timeLeft, setTimeLeft] = useState(null);
   const [isActive, setIsActive] = useState(false);
   const [activeTab, setActiveTab] = useState("infinite");
 
@@ -245,8 +247,20 @@ const MainView = () => {
     setStatsData(loadStatsData());
   };
 
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    // Initialize timeLeft after component mounts
+    if (timeLeft === null) {
+      setTimeLeft(endGoal * 1000);
+    }
+  }, [endGoal, timeLeft]);
+
   // Initialize daily seed when component mounts or tab changes to daily
   useEffect(() => {
+    if (!isMounted) return;
     if (activeTab === "daily" || activeTab === "pressure") {
       const seed = getTodaysSeed();
       setDailySeed(seed);
@@ -508,12 +522,17 @@ const MainView = () => {
   };
 
   useEffect(() => {
-    if (letters.length === 0) {
+    if (!isMounted) return; // Add this guard
+    
+    if (letters.length > 0) {
       setLetters(generateTypingArray());
       setUserInput("");
+      setCorrect(0);
+      setIsActive(false);
+      const newTimeLimit = activeTab === "daily" ? dailyTimer : endGoal;
+      setTimeLeft(newTimeLimit * 1000);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [letters.length]);
+  }, [isMounted, programmerWordsLevel, activeTab, dailySeed, dailyTimer, endGoal]);
 
   useEffect(() => {
     if (letters.length > 0) {
@@ -608,6 +627,10 @@ const MainView = () => {
       cpm
     };
   };
+
+  if (!isMounted) {
+    return <div>Loading...</div>;
+  }
 
   const StatsModal = () => {
     const stats = calculateStats();

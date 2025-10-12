@@ -1,7 +1,10 @@
 "use client"
+import dynamic from 'next/dynamic';
 import "../globals.css"
-import KeyboardLayout from "./Keyboard";
-import MainView from "./MainView";
+
+// Disable SSR for both components
+const MainView = dynamic(() => import('./MainView'), { ssr: false });
+const KeyboardLayout = dynamic(() => import('./Keyboard'), { ssr: false });
 
 export default function Home() {
   return (
