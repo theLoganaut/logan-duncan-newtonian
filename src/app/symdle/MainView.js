@@ -1,3 +1,4 @@
+'use client';
 import { generate } from "random-words";
 import React, { useEffect, useState, useCallback } from "react";
 
@@ -398,99 +399,99 @@ const MainView = () => {
     return chars;
   };
 
-const generateProgrammerWord = (rng = null, seed = null) => {
-  const random = rng || Math.random;
+  const generateProgrammerWord = (rng = null, seed = null) => {
+    const random = rng || Math.random;
 
-  const word = () => {
-    if (seed !== null) {
-      return generate({ exactly: 1, seed: `${seed}-${random()}` })[0];
-    }
-    return generate({ exactly: 1 })[0];
+    const word = () => {
+      if (seed !== null) {
+        return generate({ exactly: 1, seed: `${seed}-${random()}` })[0];
+      }
+      return generate({ exactly: 1 })[0];
+    };
+
+    const operators = [' + ', ' - ', ' * ', ' / ', ' % ', ' === ', ' !== ', ' && ', ' || ', ' < ', ' > ', ' <= ', ' >= '];
+
+    const templates = [
+      () => `${word()}.${word()}`,
+      () => `${word()}.${word()}.${word()}`,
+      () => `${word()}[${word()}]`,
+      () => `${word()}[${Math.floor(random() * 10)}]`,
+      () => `${word()}(${word()})`,
+      () => `${word()}()`,
+      () => `${word()}(${word()}, ${word()})`,
+      () => `${word()}${operators[Math.floor(random() * operators.length)]}${word()}`,
+      () => `${word()}${operators[Math.floor(random() * operators.length)]}${Math.floor(random() * 100)}`,
+      () => `${word()}[${word()}.${word()}]`,
+      () => `${word()}(${word()}${operators[Math.floor(random() * operators.length)]}${word()})`,
+      () => `${word()}[${word()}${operators[Math.floor(random() * operators.length)]}${Math.floor(random() * 10)}]`,
+      () => `${word()}[${word()}.${word()}()]`,
+      () => `${word()}(${word()}[${word()}])`,
+      () => `${word()}[${word()}.${word()}[${Math.floor(random() * 10)}]]`,
+      () => `${word()}${operators[Math.floor(random() * operators.length)]}${word()}[${word()}${operators[Math.floor(random() * operators.length)]}${word()}]`,
+      () => `${word()}[${word()}.${word()}(${word()}${operators[Math.floor(random() * operators.length)]}${word()}.${word()})]`,
+      () => `${word()}[Math.floor(Math.random() * ${word()}.length)]`,
+      () => `${word()} + ${word()}[${word()} - ${word()}]`,
+    ];
+
+    const template = templates[Math.floor(random() * templates.length)];
+    return template();
   };
 
-  const operators = [' + ', ' - ', ' * ', ' / ', ' % ', ' === ', ' !== ', ' && ', ' || ', ' < ', ' > ', ' <= ', ' >= '];
+  const getRandomSymbol = (rng = null) => {
+    const random = rng || Math.random;
+    return symbolList[Math.floor(random() * symbolList.length)];
+  };
 
-  const templates = [
-    () => `${word()}.${word()}`,
-    () => `${word()}.${word()}.${word()}`,
-    () => `${word()}[${word()}]`,
-    () => `${word()}[${Math.floor(random() * 10)}]`,
-    () => `${word()}(${word()})`,
-    () => `${word()}()`,
-    () => `${word()}(${word()}, ${word()})`,
-    () => `${word()}${operators[Math.floor(random() * operators.length)]}${word()}`,
-    () => `${word()}${operators[Math.floor(random() * operators.length)]}${Math.floor(random() * 100)}`,
-    () => `${word()}[${word()}.${word()}]`,
-    () => `${word()}(${word()}${operators[Math.floor(random() * operators.length)]}${word()})`,
-    () => `${word()}[${word()}${operators[Math.floor(random() * operators.length)]}${Math.floor(random() * 10)}]`,
-    () => `${word()}[${word()}.${word()}()]`,
-    () => `${word()}(${word()}[${word()}])`,
-    () => `${word()}[${word()}.${word()}[${Math.floor(random() * 10)}]]`,
-    () => `${word()}${operators[Math.floor(random() * operators.length)]}${word()}[${word()}${operators[Math.floor(random() * operators.length)]}${word()}]`,
-    () => `${word()}[${word()}.${word()}(${word()}${operators[Math.floor(random() * operators.length)]}${word()}.${word()})]`,
-    () => `${word()}[Math.floor(Math.random() * ${word()}.length)]`,
-    () => `${word()} + ${word()}[${word()} - ${word()}]`,
-  ];
+  const getDailyItem = (index) => {
+    if (dailySeed === null) return getRandomSymbol();
 
-  const template = templates[Math.floor(random() * templates.length)];
-  return template();
-};
+    const rng = seededRandom(dailySeed + index);
+    const shouldAddProgrammerWord = rng() < (dailyProgrammerLevel / 10);
 
-const getRandomSymbol = (rng = null) => {
-  const random = rng || Math.random;
-  return symbolList[Math.floor(random() * symbolList.length)];
-};
+    if (shouldAddProgrammerWord) {
+      return generateProgrammerWord(rng, dailySeed + index);
+    } else {
+      return getRandomSymbol(rng);
+    }
+  };
 
-const getDailyItem = (index) => {
-  if (dailySeed === null) return getRandomSymbol();
+  const generateTypingArray = useCallback(() => {
+    if (activeTab === "daily" && dailySeed !== null) {
+      const array = [];
+      const totalItems = 7;
 
-  const rng = seededRandom(dailySeed + index);
-  const shouldAddProgrammerWord = rng() < (dailyProgrammerLevel / 10);
+      for (let i = 0; i < totalItems; i++) {
+        array.push(getDailyItem(i));
+      }
 
-  if (shouldAddProgrammerWord) {
-    return generateProgrammerWord(rng, dailySeed + index);
-  } else {
-    return getRandomSymbol(rng);
-  }
-};
+      setDailyIndex(totalItems);
+      return array;
+    }
 
-const generateTypingArray = useCallback(() => {
-  if (activeTab === "daily" && dailySeed !== null) {
     const array = [];
     const totalItems = 7;
+    const programmerWordCount = Math.floor((programmerWordsLevel / 10) * totalItems);
 
-    for (let i = 0; i < totalItems; i++) {
-      array.push(getDailyItem(i));
+    for (let i = 0; i < programmerWordCount; i++) {
+      let newItem = generateProgrammerWord();
+      while (array.includes(newItem)) {
+        newItem = generateProgrammerWord();
+      }
+      array.push(newItem);
     }
 
-    setDailyIndex(totalItems);
-    return array;
-  }
-
-  const array = [];
-  const totalItems = 7;
-  const programmerWordCount = Math.floor((programmerWordsLevel / 10) * totalItems);
-
-  for (let i = 0; i < programmerWordCount; i++) {
-    let newItem = generateProgrammerWord();
-    while (array.includes(newItem)) {
-      newItem = generateProgrammerWord();
+    for (let i = programmerWordCount; i < totalItems; i++) {
+      let newItem = getRandomSymbol();
+      while (array.includes(newItem)) {
+        newItem = getRandomSymbol();
+      }
+      array.push(newItem);
     }
-    array.push(newItem);
-  }
 
-  for (let i = programmerWordCount; i < totalItems; i++) {
-    let newItem = getRandomSymbol();
-    while (array.includes(newItem)) {
-      newItem = getRandomSymbol();
-    }
-    array.push(newItem);
-  }
+    return array.sort(() => Math.random() - 0.5);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab, dailySeed, programmerWordsLevel, dailyProgrammerLevel]);
 
-  return array.sort(() => Math.random() - 0.5);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [activeTab, dailySeed, programmerWordsLevel, dailyProgrammerLevel]);
-  
   useEffect(() => {
     if (letters.length === 0) {
       setLetters(generateTypingArray());
