@@ -737,7 +737,7 @@ const MainView = () => {
 
             <p><strong>Pressure</strong> - Set a timer, get some stats for that. Good warmup for the daily.</p>
 
-            <p><strong>Daily</strong> - A seeded daily challenge, everyone's list of words is the same no matter how long! Three tries per day but only one gets submitted. Stats tracked locally each day.</p>
+            <p><strong>Daily</strong> - A seeded daily challenge, everyone&apos;s list of words is the same no matter how long! Three tries per day but only one gets submitted. Stats tracked locally each day.</p>
 
             <p><strong>Stats</strong> - View all your daily stats, your average over time, and your best numbers and when you got them.</p>
 
