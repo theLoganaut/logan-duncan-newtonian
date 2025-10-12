@@ -455,60 +455,61 @@ const MainView = () => {
     }
   };
 
-  const generateTypingArray = useCallback(() => {
-    if (activeTab === "daily" && dailySeed !== null) {
-      const array = [];
-      const totalItems = 7;
-
-      for (let i = 0; i < totalItems; i++) {
-        array.push(getDailyItem(i));
-      }
-
-      setDailyIndex(totalItems);
-      return array;
-    }
-
+const generateTypingArray = () => {
+  if (activeTab === "daily" && dailySeed !== null) {
     const array = [];
     const totalItems = 7;
-    const programmerWordCount = Math.floor((programmerWordsLevel / 10) * totalItems);
 
-    for (let i = 0; i < programmerWordCount; i++) {
-      let newItem = generateProgrammerWord();
-      while (array.includes(newItem)) {
-        newItem = generateProgrammerWord();
-      }
-      array.push(newItem);
+    for (let i = 0; i < totalItems; i++) {
+      array.push(getDailyItem(i));
     }
 
-    for (let i = programmerWordCount; i < totalItems; i++) {
-      let newItem = getRandomSymbol();
-      while (array.includes(newItem)) {
-        newItem = getRandomSymbol();
-      }
-      array.push(newItem);
-    }
+    setDailyIndex(totalItems);
+    return array;
+  }
 
-    return array.sort(() => Math.random() - 0.5);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeTab, dailySeed, programmerWordsLevel, dailyProgrammerLevel]);
+  const array = [];
+  const totalItems = 7;
+  const programmerWordCount = Math.floor((programmerWordsLevel / 10) * totalItems);
 
-  useEffect(() => {
-    if (letters.length === 0) {
-      setLetters(generateTypingArray());
-      setUserInput("");
+  for (let i = 0; i < programmerWordCount; i++) {
+    let newItem = generateProgrammerWord();
+    while (array.includes(newItem)) {
+      newItem = generateProgrammerWord();
     }
-  }, [letters, generateTypingArray]);
+    array.push(newItem);
+  }
 
-  useEffect(() => {
-    if (letters.length > 0) {
-      setLetters(generateTypingArray());
-      setUserInput("");
-      setCorrect(0);
-      setIsActive(false);
-      const newTimeLimit = activeTab === "daily" ? dailyTimer : endGoal;
-      setTimeLeft(newTimeLimit * 1000);
+  for (let i = programmerWordCount; i < totalItems; i++) {
+    let newItem = getRandomSymbol();
+    while (array.includes(newItem)) {
+      newItem = getRandomSymbol();
     }
-  }, [programmerWordsLevel, activeTab, dailySeed, dailyTimer, endGoal, generateTypingArray, letters.length]);
+    array.push(newItem);
+  }
+
+  return array.sort(() => Math.random() - 0.5);
+};
+
+useEffect(() => {
+  if (letters.length === 0) {
+    setLetters(generateTypingArray());
+    setUserInput("");
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [letters.length]);
+
+useEffect(() => {
+  if (letters.length > 0) {
+    setLetters(generateTypingArray());
+    setUserInput("");
+    setCorrect(0);
+    setIsActive(false);
+    const newTimeLimit = activeTab === "daily" ? dailyTimer : endGoal;
+    setTimeLeft(newTimeLimit * 1000);
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [programmerWordsLevel, activeTab, dailySeed, dailyTimer, endGoal]);
 
   useEffect(() => {
     let timer;
