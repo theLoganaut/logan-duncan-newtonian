@@ -1,5 +1,5 @@
 import { generate } from "random-words";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 
 const MainView = () => {
   const symbolList = "!@#$%^&*()-_+=[]{}|;:'\",/?<>";
@@ -72,7 +72,7 @@ const MainView = () => {
   };
 
   // Load all stats from localStorage
-  const loadStatsData = () => {
+  const loadStatsData = useCallback(() => {
     const allStats = { history: [] };
 
     // Get all localStorage keys that start with 'daily-'
@@ -146,10 +146,10 @@ const MainView = () => {
     }
 
     return allStats;
-  };
+  }, []);
 
   // Check if daily challenge is already completed today
-  const checkDailyStatus = () => {
+  const checkDailyStatus = useCallback(() => {
     const dateKey = getTodaysDateKey();
     const storedData = localStorage.getItem(`daily-${dateKey}`);
     if (storedData) {
@@ -162,10 +162,10 @@ const MainView = () => {
       }
     }
     return false;
-  };
+  }, []);
 
   // Get remaining attempts for today
-  const getRemainingAttempts = () => {
+  const getRemainingAttempts = useCallback(() => {
     const dateKey = getTodaysDateKey();
     const storedData = localStorage.getItem(`daily-${dateKey}`);
     if (storedData) {
@@ -178,10 +178,10 @@ const MainView = () => {
       }
     }
     return 3;
-  };
+  }, []);
 
   // Get all attempts for today
-  const getAllAttemptsForToday = () => {
+  const getAllAttemptsForToday = useCallback(() => {
     const dateKey = getTodaysDateKey();
     const storedData = localStorage.getItem(`daily-${dateKey}`);
     if (storedData) {
@@ -194,7 +194,7 @@ const MainView = () => {
       }
     }
     return [];
-  };
+  }, []);
 
   // Save attempt to localStorage
   const saveAttempt = (stats) => {
@@ -263,7 +263,7 @@ const MainView = () => {
     } else {
       setTimeLeft(endGoal * 1000);
     }
-  }, [activeTab]);
+  }, [activeTab, endGoal, dailyTimer, checkDailyStatus, getRemainingAttempts, getAllAttemptsForToday, loadStatsData]);
 
   const endDailyChallenge = () => {
     setIsActive(false);
@@ -454,7 +454,7 @@ const MainView = () => {
     }
   };
 
-  const generateTypingArray = () => {
+  const generateTypingArray = useCallback(() => {
     if (activeTab === "daily" && dailySeed !== null) {
       const array = [];
       const totalItems = 7;
@@ -488,14 +488,14 @@ const MainView = () => {
     }
 
     return array.sort(() => Math.random() - 0.5);
-  };
+  }, [activeTab, dailySeed, programmerWordsLevel]);
 
   useEffect(() => {
     if (letters.length === 0) {
       setLetters(generateTypingArray());
       setUserInput("");
     }
-  }, [letters]);
+  }, [letters, generateTypingArray]);
 
   useEffect(() => {
     if (letters.length > 0) {
@@ -506,7 +506,7 @@ const MainView = () => {
       const newTimeLimit = activeTab === "daily" ? dailyTimer : endGoal;
       setTimeLeft(newTimeLimit * 1000);
     }
-  }, [programmerWordsLevel, activeTab, dailySeed]);
+  }, [programmerWordsLevel, activeTab, dailySeed, dailyTimer, endGoal, generateTypingArray, letters.length]);
 
   useEffect(() => {
     let timer;

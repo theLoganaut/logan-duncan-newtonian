@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import TeamLine from "./TeamLine";
 import SendingModal from "./SendingModal";
 import UnderConstruction from "../UnderConstruction";
@@ -76,7 +76,7 @@ export default function Page() {
     }
   };
 
-  const formatGamesByDate = (games) => {
+  const formatGamesByDate = useCallback((games) => {
     const dateMap = new Map();
     for (const game of games) {
       const rawDate = game.dateEventLocal;
@@ -106,7 +106,7 @@ export default function Page() {
       date,
       games,
     }));
-  };
+  }, []);
 
   const getCurrentNFLWeekIndex = (date = new Date(), offset = 1) => {
     const week1Start = new Date("2025-09-04T10:00:00-05:00");
@@ -152,7 +152,7 @@ export default function Page() {
     }
 
     fetchWeekData();
-  }, [mockDate]);
+  }, [mockDate, formatGamesByDate]);
 
   const formatPicksRow = async (fullName, gameGroups, picks) => {
     const now = mockDate ? new Date(mockDate) : new Date();
@@ -266,8 +266,8 @@ export default function Page() {
                 onChange={(e) => setName(e.target.value)}
                 onBlur={() => setTouched(true)}
                 className={`w-full mb-3 px-4 border text-base rounded-xl shadow-sm focus:outline-none focus:ring-2 transition ${!isValid && touched
-                    ? "border-red-500 focus:ring-red-300"
-                    : "border-gray-300 focus:ring-blue-300"
+                  ? "border-red-500 focus:ring-red-300"
+                  : "border-gray-300 focus:ring-blue-300"
                   }`}
               />
               {!isValid && touched && (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 const KeyboardLayout = () => {
   const [activeLayer, setActiveLayer] = useState('L1');
@@ -207,9 +207,9 @@ const KeyboardLayout = () => {
       window.removeEventListener('mouseup', handleMouseUp);
       window.removeEventListener('contextmenu', handleContextMenu);
     };
-  }, [modalOpen, selectedButton, activeLayer, isMouseDown]);
+  }, [modalOpen, selectedButton, activeLayer, isMouseDown, speedAssign, advanceToNextKey, updateKeyMapping]);
 
-  const updateKeyMapping = (row, index, newKey) => {
+  const updateKeyMapping = useCallback((row, index, newKey) => {
     setKeyLayout(prev => {
       const newLayout = { ...prev };
       newLayout[row][index] = {
@@ -218,8 +218,8 @@ const KeyboardLayout = () => {
       };
       return newLayout;
     });
-  };
-  const advanceToNextKey = (currentRow, currentIndex) => {
+  }, [activeLayer]);
+  const advanceToNextKey = useCallback((currentRow, currentIndex) => {
     // Close modal briefly to provide visual feedback
     setModalOpen(false);
 
@@ -259,7 +259,7 @@ const KeyboardLayout = () => {
       // No more keys, close modal
       setSelectedButton(null);
     }, 100); // 100ms delay for visual feedback
-  };
+  }, [keyLayout]);
 
   const handleKeyClick = (row, index, keyData) => {
     if (keyData.enabled === false) {
