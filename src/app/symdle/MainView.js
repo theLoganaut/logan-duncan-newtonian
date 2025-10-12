@@ -398,7 +398,7 @@ const MainView = () => {
     return chars;
   };
 
-  const generateProgrammerWord = (rng = null, seed = null) => {
+  const generateProgrammerWord = useCallback((rng = null, seed = null) => {
     const random = rng || Math.random;
 
     const word = () => {
@@ -434,12 +434,12 @@ const MainView = () => {
 
     const template = templates[Math.floor(random() * templates.length)];
     return template();
-  };
+  }, []);
 
-  const getRandomSymbol = (rng = null) => {
+  const getRandomSymbol = useCallback((rng = null) => {
     const random = rng || Math.random;
     return symbolList[Math.floor(random() * symbolList.length)];
-  };
+  }, [symbolList]);
 
   const getDailyItem = useCallback((index) => {
     if (dailySeed === null) return getRandomSymbol();
@@ -452,7 +452,7 @@ const MainView = () => {
     } else {
       return getRandomSymbol(rng);
     }
-  }, [dailySeed, dailyProgrammerLevel]);
+  }, [dailySeed, dailyProgrammerLevel, getRandomSymbol, generateProgrammerWord]);
 
   const generateTypingArray = useCallback(() => {
     if (activeTab === "daily" && dailySeed !== null) {
@@ -488,8 +488,8 @@ const MainView = () => {
     }
 
     return array.sort(() => Math.random() - 0.5);
-  }, [activeTab, dailySeed, programmerWordsLevel, getDailyItem]);
-
+  }, [activeTab, dailySeed, programmerWordsLevel, getDailyItem, generateProgrammerWord, getRandomSymbol]);
+  
   useEffect(() => {
     if (letters.length === 0) {
       setLetters(generateTypingArray());
