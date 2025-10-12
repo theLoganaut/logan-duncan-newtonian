@@ -128,6 +128,60 @@ const KeyboardLayout = () => {
     return newLayout;
   };
 
+  
+  const advanceToNextKey = useCallback((currentRow, currentIndex) => {
+    // Close modal briefly to provide visual feedback
+    setModalOpen(false);
+
+    setTimeout(() => {
+      const rowKeys = Object.keys(keyLayout);
+      const currentRowIndex = rowKeys.indexOf(currentRow);
+      const currentRowData = keyLayout[currentRow];
+
+      // Try next key in current row
+      let nextIndex = currentIndex + 1;
+      while (nextIndex < currentRowData.length) {
+        if (currentRowData[nextIndex].enabled !== false) {
+          setSelectedButton({ row: currentRow, index: nextIndex });
+          setModalOpen(true);
+          return;
+        }
+        nextIndex++;
+      }
+
+      // Move to next row
+      let nextRowIndex = currentRowIndex + 1;
+      while (nextRowIndex < rowKeys.length) {
+        const nextRowName = rowKeys[nextRowIndex];
+        const nextRowData = keyLayout[nextRowName];
+
+        // Find first enabled key in this row
+        for (let i = 0; i < nextRowData.length; i++) {
+          if (nextRowData[i].enabled !== false) {
+            setSelectedButton({ row: nextRowName, index: i });
+            setModalOpen(true);
+            return;
+          }
+        }
+        nextRowIndex++;
+      }
+
+      // No more keys, close modal
+      setSelectedButton(null);
+    }, 100); // 100ms delay for visual feedback
+  }, [keyLayout]);
+
+    const updateKeyMapping = useCallback((row, index, newKey) => {
+    setKeyLayout(prev => {
+      const newLayout = { ...prev };
+      newLayout[row][index] = {
+        ...newLayout[row][index],
+        [activeLayer]: newKey
+      };
+      return newLayout;
+    });
+  }, [activeLayer]);
+
   // Listen for keyboard events
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -209,58 +263,6 @@ const KeyboardLayout = () => {
       window.removeEventListener('contextmenu', handleContextMenu);
     };
   }, [modalOpen, selectedButton, activeLayer, isMouseDown, speedAssign, advanceToNextKey, updateKeyMapping]);
-
-  const updateKeyMapping = useCallback((row, index, newKey) => {
-    setKeyLayout(prev => {
-      const newLayout = { ...prev };
-      newLayout[row][index] = {
-        ...newLayout[row][index],
-        [activeLayer]: newKey
-      };
-      return newLayout;
-    });
-  }, [activeLayer]);
-  const advanceToNextKey = useCallback((currentRow, currentIndex) => {
-    // Close modal briefly to provide visual feedback
-    setModalOpen(false);
-
-    setTimeout(() => {
-      const rowKeys = Object.keys(keyLayout);
-      const currentRowIndex = rowKeys.indexOf(currentRow);
-      const currentRowData = keyLayout[currentRow];
-
-      // Try next key in current row
-      let nextIndex = currentIndex + 1;
-      while (nextIndex < currentRowData.length) {
-        if (currentRowData[nextIndex].enabled !== false) {
-          setSelectedButton({ row: currentRow, index: nextIndex });
-          setModalOpen(true);
-          return;
-        }
-        nextIndex++;
-      }
-
-      // Move to next row
-      let nextRowIndex = currentRowIndex + 1;
-      while (nextRowIndex < rowKeys.length) {
-        const nextRowName = rowKeys[nextRowIndex];
-        const nextRowData = keyLayout[nextRowName];
-
-        // Find first enabled key in this row
-        for (let i = 0; i < nextRowData.length; i++) {
-          if (nextRowData[i].enabled !== false) {
-            setSelectedButton({ row: nextRowName, index: i });
-            setModalOpen(true);
-            return;
-          }
-        }
-        nextRowIndex++;
-      }
-
-      // No more keys, close modal
-      setSelectedButton(null);
-    }, 100); // 100ms delay for visual feedback
-  }, [keyLayout]);
 
   const handleKeyClick = (row, index, keyData) => {
     if (keyData.enabled === false) {
