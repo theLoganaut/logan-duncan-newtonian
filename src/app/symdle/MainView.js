@@ -246,11 +246,11 @@ const MainView = () => {
   };
 
   useEffect(() => {
-  // Initialize timeLeft after component mounts
-  if (timeLeft === null) {
-    setTimeLeft(endGoal * 1000);
-  }
-}, [endGoal, timeLeft]);
+    // Initialize timeLeft after component mounts
+    if (timeLeft === null) {
+      setTimeLeft(endGoal * 1000);
+    }
+  }, [endGoal, timeLeft]);
 
   // Initialize daily seed when component mounts or tab changes to daily
   useEffect(() => {
@@ -377,9 +377,7 @@ const MainView = () => {
           newLetters.push(newItem);
 
           setLetters(newLetters);
-          React.startTransition(() => {
-            setUserInput("");
-          });
+          setUserInput("");  // Remove the startTransition wrapper
           setCorrect(prev => prev + 1);
         }
       }
@@ -668,6 +666,7 @@ const MainView = () => {
       </div>
     );
   };
+
   const PressureStatsModal = () => {
     const stats = calculateStats();
 
@@ -699,7 +698,10 @@ const MainView = () => {
           </div>
 
           <button
-            onClick={handleRestart}
+            onClick={() => {
+              setShowPressureStatsModal(false);
+              handleRestart();
+            }}
             className="w-full bg-gray-700 text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition-all mt-6"
           >
             Close
@@ -708,6 +710,7 @@ const MainView = () => {
       </div>
     );
   };
+
   const InfoModal = () => {
     const [buttonPosition, setButtonPosition] = useState({ top: 0, left: 0 });
     const [isPositioned, setIsPositioned] = useState(false);
