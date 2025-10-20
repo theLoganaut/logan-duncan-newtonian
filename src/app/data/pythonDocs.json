@@ -1,0 +1,61 @@
+{
+  "categories": [
+    {
+      "name": "software languages",
+      "subcategories": [
+        {
+          "name": "python",
+          "pages": [
+            {
+              "name": "documentation",
+              "questions": [
+                {
+                  "id": 1,
+                  "definition": "Return the absolute value of a number. If the argument is a complex number, its magnitude is returned.",
+                  "answer": "abs()",
+                  "difficulty": "easy",
+                  "source": "https://docs.python.org/3/library/functions.html#abs"
+                },
+                {
+                  "id": 2,
+                  "definition": "Return an asynchronous iterator for an asynchronous iterable.",
+                  "answer": "aiter()",
+                  "difficulty": "hard",
+                  "source": "https://docs.python.org/3/library/functions.html#aiter"
+                },
+                {
+                  "id": 3,
+                  "definition": "Return True if all elements of the iterable are true (or if the iterable is empty).",
+                  "answer": "all()",
+                  "difficulty": "medium",
+                  "source": "https://docs.python.org/3/library/functions.html#all"
+                },
+                {
+                  "id": 4,
+                  "definition": "Return a string containing a printable representation of an object, but escape the non-ASCII characters in the string returned by repr() using \\x, \\u, or \\U escapes.",
+                  "answer": "any()",
+                  "difficulty": "medium",
+                  "source": "https://docs.python.org/3/library/functions.html#ascii"
+                },
+                {
+                  "id": 5,
+                  "definition": "Convert an integer number to a binary string prefixed with “0b”. The result is a valid Python expression.",
+                  "answer": "bin()",
+                  "difficulty": "medium",
+                  "source": "https://docs.python.org/3/library/functions.html#bin"
+                },
+                {
+                  "id": 6,
+                  "definition": "Return a Boolean value, i.e. one of True or False. The argument is converted using the standard truth testing procedure. If the argument is false or omitted, this returns False; otherwise, it returns True.",
+                  "answer": "bool()",
+                  "difficulty": "easy",
+                  "source": "https://docs.python.org/3/library/functions.html#bool"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
