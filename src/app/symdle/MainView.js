@@ -269,7 +269,7 @@ const MainView = () => {
       setAllAttempts(attempts);
 
       const rng = seededRandom(seed);
-      const randomLevel = Math.floor(rng() * 11);
+      const randomLevel = Math.floor(rng() * 9);
       setDailyProgrammerLevel(randomLevel);
 
       const randomTimer = 30 + Math.floor(rng() * 16);
