@@ -28,7 +28,7 @@ export default function Sidebar({ data }) {
   };
 
   return (
-    <div className="w-56 border-r border-white h-screen overflow-y-auto">
+    <div className="w-56 bg-black border-r border-white h-screen overflow-y-auto">
       {/* What's This? - Home Link */}
       <Link href="/docudle">
         <div className="border-b border-white p-4 text-center text-white hover:bg-gray-900 cursor-pointer">
@@ -37,9 +37,11 @@ export default function Sidebar({ data }) {
       </Link>
 
       {/* Stats */}
-      <div className="border-b border-white p-4 text-center text-white hover:bg-gray-900 cursor-pointer">
-        Stats
-      </div>
+      <Link href="/docudle/stats">
+        <div className="border-b border-white p-4 text-center text-white hover:bg-gray-900 cursor-pointer">
+          Stats
+        </div>
+      </Link>
 
       {/* Categories */}
       {data.categories.map((category, catIndex) => (

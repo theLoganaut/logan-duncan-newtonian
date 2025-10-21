@@ -13,6 +13,7 @@
                   "id": 1,
                   "definition": "Return the absolute value of a number. If the argument is a complex number, its magnitude is returned.",
                   "answer": "abs()",
+                  "extra": "abs(integer)",
                   "difficulty": "easy",
                   "source": "https://docs.python.org/3/library/functions.html#abs"
                 },
@@ -20,6 +21,7 @@
                   "id": 2,
                   "definition": "Return an asynchronous iterator for an asynchronous iterable.",
                   "answer": "aiter()",
+                  "extra": "aiter(async_iterable)",
                   "difficulty": "hard",
                   "source": "https://docs.python.org/3/library/functions.html#aiter"
                 },
@@ -27,6 +29,7 @@
                   "id": 3,
                   "definition": "Return True if all elements of the iterable are true (or if the iterable is empty).",
                   "answer": "all()",
+                  "extra": "all(iteratable)",
                   "difficulty": "medium",
                   "source": "https://docs.python.org/3/library/functions.html#all"
                 },
@@ -34,6 +37,7 @@
                   "id": 4,
                   "definition": "Return a string containing a printable representation of an object, but escape the non-ASCII characters in the string returned by repr() using \\x, \\u, or \\U escapes.",
                   "answer": "any()",
+                  "extra": "any(iterable)",
                   "difficulty": "medium",
                   "source": "https://docs.python.org/3/library/functions.html#ascii"
                 },
@@ -41,6 +45,7 @@
                   "id": 5,
                   "definition": "Convert an integer number to a binary string prefixed with “0b”. The result is a valid Python expression.",
                   "answer": "bin()",
+                  "extra": "bin(integer)",
                   "difficulty": "medium",
                   "source": "https://docs.python.org/3/library/functions.html#bin"
                 },
@@ -48,8 +53,94 @@
                   "id": 6,
                   "definition": "Return a Boolean value, i.e. one of True or False. The argument is converted using the standard truth testing procedure. If the argument is false or omitted, this returns False; otherwise, it returns True.",
                   "answer": "bool()",
+                  "extra": "bool(object)",
                   "difficulty": "easy",
                   "source": "https://docs.python.org/3/library/functions.html#bool"
+                },
+                {
+                  "id": 7,
+                  "definition": "Return the string representing a character with the specified Unicode code point. This is the inverse of ord()",
+                  "answer": "chr()",
+                  "difficulty": "easy",
+                  "source": "https://docs.python.org/3/library/functions.html#chr"
+                },
+                {
+                  "id": 8,
+                  "definition": "Convert a single string or number to a complex number, or create a complex number from real and imaginary parts.",
+                  "answer": "complex()",
+                  "extra": [
+                    "complex(number), complex(string), complex(real, imaginary)"
+                  ],
+                  "difficulty": "easy",
+                  "source": "https://docs.python.org/3/library/functions.html#complex"
+                },
+                {
+                  "id": 9,
+                  "definition": "Return an _______ object. iterable must be a sequence, an iterator, or some other object which supports iteration. The __next__() method of the iterator returned by ________() returns a tuple containing a count (from start which defaults to 0) and the values obtained from iterating over iterable.",
+                  "answer": "enumerate()",
+                  "extra": "enumerate(iterable, start)",
+                  "difficulty": "easy",
+                  "source": "https://docs.python.org/3/library/functions.html#enumerate"
+                },
+                {
+                  "id": 10,
+                  "definition": "The function deletes the named attribute, provided the object allows it.",
+                  "answer": "delattr()",
+                  "extra": "delattr(object, string)",
+                  "difficulty": "easy",
+                  "source": "https://docs.python.org/3/library/functions.html#delattr"
+                },
+                {
+                  "id": 11,
+                  "definition": "Returns a pair of numbers consisting of their quotient and remainder when using integer division.",
+                  "answer": "divmod()",
+                  "extra": "divmod(a, b)",
+                  "difficulty": "medium",
+                  "source": "https://docs.python.org/3/library/functions.html#divmod"
+                },
+                {
+                  "id": 12,
+                  "definition": "Construct an iterator from those elements of iterable for which function is true. iterable may be either a sequence, a container which supports iteration, or an iterator.",
+                  "answer": "filter()",
+                  "extra": "filter(function, iterable)",
+                  "difficulty": "easy",
+                  "source": "https://docs.python.org/3/library/functions.html#filter"
+                },
+                {
+                  "id": 13,
+                  "definition": "Return a floating-point number constructed from a number or a string.",
+                  "answer": "float()",
+                  "extra": [
+                    "float(integer)",
+                    "float(string)",
+                    "float(number)"
+                  ],
+                  "difficulty": "easy",
+                  "source": "https://docs.python.org/3/library/functions.html#float"
+                },
+                {
+                  "id": 14,
+                  "definition": "Return the value of the named attribute of object. name must be a string. If the string is the name of one of the object’s attributes, the result is the value of that attribute.",
+                  "answer": "getattr()",
+                  "extra": "getattr(object, name)",
+                  "difficulty": "easy",
+                  "source": "https://docs.python.org/3/library/functions.html#getattr"
+                },
+                {
+                  "id": 15,
+                  "definition": " The result is True if the string is the name of one of the object’s attributes, False if not.",
+                  "answer": "hasattr()",
+                  "extra": "hasattr(object, name)",
+                  "difficulty": "easy",
+                  "source": "https://docs.python.org/3/library/functions.html#hasattr"
+                },
+                {
+                  "id": 16,
+                  "definition": "Return the “identity” of an object. This is an integer which is guaranteed to be unique and constant for this object during its lifetime. Two objects with non-overlapping lifetimes may have the same _____ value.",
+                  "answer": "id()",
+                  "extra": "id(object)",
+                  "difficulty": "medium",
+                  "source": "https://docs.python.org/3/library/functions.html#id"
                 }
               ]
             }

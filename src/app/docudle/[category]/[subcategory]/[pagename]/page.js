@@ -17,11 +17,11 @@ export default function DocudlePage({ params }) {
     page => page.name === decodeURIComponent(pagename)
   );
 
-  return <MainView 
+return <MainView 
   currentPage={pageData} 
   isHome={false}
-  categoryName={category}
-  subcategoryName={subcategory}
-  pageName={pagename}
+  categoryName={decodeURIComponent(category)}
+  subcategoryName={decodeURIComponent(subcategory)}
+  pageName={decodeURIComponent(pagename)}
 />
 }

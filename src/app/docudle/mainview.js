@@ -12,13 +12,12 @@ export default function MainView({ currentPage, isHome, subcategoryName, pageNam
   // Generate unique key for this specific category path
   const getStatsKey = () => {
     if (!categoryName || !subcategoryName || !pageName) return null;
-    return `docudle_stats_${categoryName}_${subcategoryName}_${pageName}`;
-  };
-
-  const getTodayKey = () => {
-    if (!categoryName || !subcategoryName || !pageName) return null;
-    const today = new Date().toISOString().split('T')[0];
-    return `docudle_daily_${categoryName}_${subcategoryName}_${pageName}_${today}`;
+    // Decode URI components first, then create clean key
+    const cleanKey = `${decodeURIComponent(categoryName)}_${decodeURIComponent(subcategoryName)}_${decodeURIComponent(pageName)}`
+      .toLowerCase()
+      .replace(/\s+/g, '_')
+      .replace(/[^a-z0-9_]/g, '');
+    return `docudle_stats_${cleanKey}`;
   };
 
   // Initialize or load stats from localStorage
@@ -40,9 +39,6 @@ export default function MainView({ currentPage, isHome, subcategoryName, pageNam
       winRate: 0,
       averageGuesses: 0,
       guessDistribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
-      perfectGames: 0,
-      clutchGames: 0,
-      totalDaysPlayed: 0,
       lastPlayedDate: null
     };
   };
@@ -55,23 +51,55 @@ export default function MainView({ currentPage, isHome, subcategoryName, pageNam
 
   // Check if daily was already completed today
   useEffect(() => {
-    const todayKey = getTodayKey();
-    if (todayKey && mode === 'daily') {
-      const completed = localStorage.getItem(todayKey);
-      if (completed) {
+    if (mode === 'daily') {
+      const stats = loadStats();
+      const today = new Date().toISOString().split('T')[0];
+      
+      if (stats && stats.lastPlayedDate === today) {
         setDailyComplete(true);
         setGameState('completed');
+      } else {
+        setDailyComplete(false);
+        setGameState('playing');
       }
     }
   }, [mode, categoryName, subcategoryName, pageName]);
 
-  // Set random question on initial load
+  // Seeded random function for consistent daily questions
+  const seededRandom = (seed) => {
+    const x = Math.sin(seed) * 10000;
+    return x - Math.floor(x);
+  };
+
+  const getDailyQuestionIndex = (questionsLength) => {
+    // Create seed from today's date and category path
+    const today = new Date().toISOString().split('T')[0];
+    const seedString = `${today}_${categoryName}_${subcategoryName}_${pageName}`;
+    
+    // Convert string to number seed
+    let seed = 0;
+    for (let i = 0; i < seedString.length; i++) {
+      seed = ((seed << 5) - seed) + seedString.charCodeAt(i);
+      seed = seed & seed; // Convert to 32-bit integer
+    }
+    
+    // Use seeded random to get consistent index
+    const random = seededRandom(Math.abs(seed));
+    return Math.floor(random * questionsLength);
+  };
+
+  // Set question on initial load - random for practice, seeded daily for daily mode
   useEffect(() => {
     if (currentPage?.questions && currentPage.questions.length > 0) {
-      const randomIndex = Math.floor(Math.random() * currentPage.questions.length);
-      setCurrentQuestionIndex(randomIndex);
+      if (mode === 'daily') {
+        const dailyIndex = getDailyQuestionIndex(currentPage.questions.length);
+        setCurrentQuestionIndex(dailyIndex);
+      } else {
+        const randomIndex = Math.floor(Math.random() * currentPage.questions.length);
+        setCurrentQuestionIndex(randomIndex);
+      }
     }
-  }, [currentPage]);
+  }, [currentPage, mode]);
 
   if (isHome) {
     return (
@@ -130,16 +158,11 @@ export default function MainView({ currentPage, isHome, subcategoryName, pageNam
         // Update streak
         if (isNewDay) {
           stats.currentStreak += 1;
-          stats.totalDaysPlayed += 1;
         }
         stats.maxStreak = Math.max(stats.maxStreak, stats.currentStreak);
         
         // Update guess distribution
         stats.guessDistribution[newGuessCount] = (stats.guessDistribution[newGuessCount] || 0) + 1;
-        
-        // Track perfect and clutch games
-        if (newGuessCount === 1) stats.perfectGames += 1;
-        if (newGuessCount === 5) stats.clutchGames += 1;
         
         // Calculate average guesses
         const totalGuesses = Object.entries(stats.guessDistribution).reduce((sum, [guess, count]) => {
@@ -153,16 +176,6 @@ export default function MainView({ currentPage, isHome, subcategoryName, pageNam
         stats.lastPlayedDate = today;
         
         saveStats(stats);
-        
-        // Mark today as completed
-        const todayKey = getTodayKey();
-        if (todayKey) {
-          localStorage.setItem(todayKey, JSON.stringify({ 
-            completed: true, 
-            guesses: newGuessCount,
-            date: today
-          }));
-        }
         
         setDailyComplete(true);
       }
@@ -187,7 +200,7 @@ export default function MainView({ currentPage, isHome, subcategoryName, pageNam
       stats.currentStreak = 0;
       
       if (isNewDay) {
-        stats.totalDaysPlayed += 1;
+        // No need to track totalDaysPlayed anymore
       }
       
       // Update win rate
@@ -196,17 +209,6 @@ export default function MainView({ currentPage, isHome, subcategoryName, pageNam
       stats.lastPlayedDate = today;
       
       saveStats(stats);
-      
-      // Mark today as completed (failed)
-      const todayKey = getTodayKey();
-      if (todayKey) {
-        localStorage.setItem(todayKey, JSON.stringify({ 
-          completed: true, 
-          guesses: newGuessCount,
-          failed: true,
-          date: today
-        }));
-      }
       
       setDailyComplete(true);
     }
