@@ -480,12 +480,28 @@ const MainView = () => {
     if (activeTab === "daily" && dailySeed !== null) {
       const array = [];
       const totalItems = 7;
+      const programmerWordCount = Math.round((dailyProgrammerLevel / 10) * totalItems);
 
-      for (let i = 0; i < totalItems; i++) {
-        array.push(getDailyItem(i));
+      // Generate exactly the right number of programmer words
+      for (let i = 0; i < programmerWordCount; i++) {
+        const rng = seededRandom(dailySeed + dailyIndex + i);
+        array.push(generateProgrammerWord(rng, dailySeed + dailyIndex + i));
       }
 
-      setDailyIndex(totalItems);
+      // Fill the rest with symbols
+      for (let i = programmerWordCount; i < totalItems; i++) {
+        const rng = seededRandom(dailySeed + dailyIndex + i);
+        array.push(getRandomSymbol(rng));
+      }
+
+      // Shuffle the array using seeded random
+      const rng = seededRandom(dailySeed + dailyIndex + totalItems);
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(rng() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+
+      setDailyIndex(dailyIndex + totalItems);
       return array;
     }
 
